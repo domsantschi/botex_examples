@@ -167,3 +167,5 @@ secrets.env
 .Rproj.user
 .DS_store
 .Rhistory
+
+.README.qmd
