@@ -3,6 +3,15 @@ title: "botex: a walk-through"
 format: gfm
 ipynb-shell-interactivity: all
 ---
+### How to Re-Run Locally with UV
+
+1. uv venv
+2. activate venv
+3. uv add otree
+4. uv add botex
+5. cd otree
+6. otree devserver
+
 
 ### Idea
 
