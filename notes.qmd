@@ -1,0 +1,16 @@
+
+### How to Re-Run Locally with UV
+
+1. uv venv
+2. activate venv
+3. uv add botex
+4. uv add otree
+4. uv add -r requirements.txt
+5. cd otree
+6. otree devserver (IMPORTANT - Run in Google Chrome)
+
+GitHub Repo Link
+https://github.com/trr266/botex_examples
+
+# In case of error with pkg_resources
+uv add --upgrade setuptools

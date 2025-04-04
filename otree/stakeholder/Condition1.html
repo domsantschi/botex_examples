@@ -1,0 +1,28 @@
+{{ block title }}Stakeholder Relationship Attributes{{ endblock }}
+{{ block content }}
+    <p>
+        Assume <b>you are evaluating an investment</b> in Acme LLC.
+    </p>
+    <p>
+        As part of your risk assessment of Acme LLC, you <b>review the following information</b> about the stakeholder engagement initiative performed by the company to inform its “back-to-financial-strength” strategy and foster trust among internal and external stakeholders.
+    </p>
+    <p>
+        The <b>internal and external stakeholders</b> that were consulted for the stakeholder engagement initiative possess the following relationship attributes to Acme LLC:
+    </p>
+    {% if condition == 'Low Stakeholder Salience' %}
+        <ul>
+            <li>The stakeholders have <b>low power to influence</b> Acme LLC</li>
+            <li>The stakeholder's relationship with Acme LLC is of <b>low legitimacy</b></li>
+            <li>The stakeholder's claim on Acme LLC is considered <b>low urgency</b></li>
+        </ul>
+    {% elif condition == 'High Stakeholder Salience' %}
+        <ul>
+            <li>The stakeholders have <b>high power to influence</b> Acme LLC</li>
+            <li>The stakeholder's relationship with Acme LLC is of <b>high legitimacy</b></li>
+            <li>The stakeholder's claim on Acme LLC is considered <b>high urgency</b></li>
+        </ul>
+    {% endif %}
+    <p>
+        {{ next_button }}
+    </p>
+{{ endblock }}

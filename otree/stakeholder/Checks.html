@@ -1,0 +1,30 @@
+{{ block title }}Some Last Questions{{ endblock }}
+{{ block content }}
+    <p>
+        Thank you for participating! 
+        Before you go, we have a few last questions for you.
+    </p>
+
+    <!-- Manipulation Checks -->
+    <p>Please answer the following questions about the case materials, to the best of your recollections.</p>
+
+    <p>
+        Which of the following describes the <b>stakeholder relationship attributes</b> toward Acme LLC of the internal and external stakeholders consulted for the stakeholder engagement initiative?
+    </p>
+    <ul>
+        <li><input type="radio" name="stakeholder_attributes" value="The consulted stakeholders had low power, legitimacy, and urgency toward Acme LLC." required> The consulted stakeholders had <b>low power, legitimacy, and urgency</b> toward Acme LLC.</li>
+        <li><input type="radio" name="stakeholder_attributes" value="The consulted stakeholders had high power, legitimacy, and urgency toward Acme LLC."> The consulted stakeholders had <b>high power, legitimacy, and urgency</b> toward Acme LLC.</li>
+    </ul>
+    {{ formfield_errors 'stakeholder_attributes' }}
+
+    <p>
+        Which of the following describes the <b>trendline of the stakeholder consensus</b> depicted in Acme LLC’s ESG theme prioritization chart?
+    </p>
+    <ul>
+        <li><input type="radio" name="trendline" value="The trendline was negative, indicating a negative correlation between the internal and stakeholder priorities." required> The trendline was negative, indicating a <b>negative consensus</b> between the internal and external stakeholder priorities.</li>
+        <li><input type="radio" name="trendline" value="The trendline was positive, indicating a positive correlation between the internal and stakeholder priorities."> The trendline was positive, indicating a <b>positive consensus</b> between the internal and external stakeholder priorities.</li>
+    </ul>
+    {{ formfield_errors 'trendline' }}
+
+    <p>{{ next_button }}</p>
+{{ endblock }}

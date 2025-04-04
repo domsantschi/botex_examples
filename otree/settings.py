@@ -9,6 +9,12 @@ SESSION_CONFIGS = [
         app_sequence=['mftrust'],
         num_demo_participants=2,
     ),
+    dict(
+        name='stakeholder',
+        display_name="A Stakeholder Game",
+        app_sequence=['stakeholder'],
+        num_demo_participants=1,
+    ),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs

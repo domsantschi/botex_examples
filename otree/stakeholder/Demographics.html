@@ -1,0 +1,67 @@
+{{ block title }}Demographics and Post-Task Questions{{ endblock }}
+{{ block content }}
+
+<p>Please answer the following questions to help us better understand why your responses might be different from those of other participants in this study.</p>
+
+<p>
+    <strong>1. What is your age?</strong>
+</p>
+<ul>
+    <li><input type="radio" name="age" value="Less than 25 years old" required> Less than 25 years old</li>
+    <li><input type="radio" name="age" value="25-34 years old"> 25-34 years old</li>
+    <li><input type="radio" name="age" value="35-44 years old"> 35-44 years old</li>
+    <li><input type="radio" name="age" value="45-54 years old"> 45-54 years old</li>
+    <li><input type="radio" name="age" value="55-64 years old"> 55-64 years old</li>
+    <li><input type="radio" name="age" value="65-74 years old"> 65-74 years old</li>
+    <li><input type="radio" name="age" value="Above 74 years old"> Above 74 years old</li>
+</ul>
+{{ formfield_errors 'age' }}
+
+<p>
+    <strong>2. What is your gender?</strong>
+</p>
+<ul>
+    <li><input type="radio" name="gender" value="Male" required> Male</li>
+    <li><input type="radio" name="gender" value="Female"> Female</li>
+    <li><input type="radio" name="gender" value="Other"> Other</li>
+</ul>
+{{ formfield_errors 'gender' }}
+
+<p>
+    <strong>3. Please select the highest academic qualification that you have.</strong>
+</p>
+<ul>
+    <li><input type="radio" name="qualification" value="Diploma" required> Diploma</li>
+    <li><input type="radio" name="qualification" value="Bachelor Degree"> Bachelor Degree</li>
+    <li><input type="radio" name="qualification" value="Masters Degree"> Masters Degree</li>
+    <li><input type="radio" name="qualification" value="Doctoral Degree"> Doctoral Degree</li>
+    <li><input type="radio" name="qualification" value="None of the above"> None of the above</li>
+</ul>
+{{ formfield_errors 'qualification' }}
+
+<p>
+    <strong>4. How many years of full-time working experience in an analyst role do you have?</strong>
+</p>
+<p>
+    <label for="finance_experience">Please type here:</label>
+    <input type="number" id="finance_experience" name="finance_experience" min="0" step="1" required> years
+</p>
+{{ formfield_errors 'finance_experience' }}
+
+<p>
+    <strong>5. Please indicate your level of involvement as an analyst:</strong>
+</p>
+<p>Ranging from Not at all involved (1) to Very involved (7)</p>
+<p>
+    <label for="investment_research">5.1 How involved are you with investment research:</label>
+    <input type="range" id="investment_research" name="investment_research" min="1" max="7" required>
+</p>
+{{ formfield_errors 'investment_research' }}
+<p>
+    <label for="risk_assessments">5.2 How involved are you with risk assessments:</label>
+    <input type="range" id="risk_assessments" name="risk_assessments" min="1" max="7" required>
+</p>
+{{ formfield_errors 'risk_assessments' }}
+
+<p>{{ next_button }}</p>
+{{ endblock }}
