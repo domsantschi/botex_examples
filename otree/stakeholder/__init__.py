@@ -54,15 +54,6 @@ class Player(BasePlayer):
         label="Please provide your written justifications for your assessment."
     )
 
-    # # Fields to store second assessment inputs
-    # ebit_assessment2 = models.FloatField(label="EBIT (Assessment 2)", initial=0)
-    # net_sales_assessment2 = models.FloatField(label="Net Sales (Assessment 2)", initial=0)
-    # market_cap_assessment2 = models.FloatField(label="Market Capitalization (Assessment 2)", initial=0)
-    # altman_z_assessment2 = models.FloatField(label="Altman Z-Score (Assessment 2)", initial=0)
-    # justifications_assessment2 = models.LongStringField(
-    #     label="Justifications for Assessment 2"
-    # )
-
     # Fields for Controls
     risk_attitudes = models.IntegerField(
         label="Are you generally a person who is willing to take risks or do you try to avoid taking risks?",
@@ -98,39 +89,23 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
     )
 
-    # Multiple-choice questions
-    internal_stakeholders = models.LongStringField(
-        label="When considering internal stakeholders, who did you think about?",
-        blank=True,  # Allow blank if no options are selected
+    # Add these fields to the Player class:
+    internal_stakeholders_responses = models.StringField(
+        label="Internal stakeholders selections",
+        blank=True
     )
-    internal_stakeholders_other = models.StringField(
-        label="If other, please explain:",
-        blank=True,
+    external_stakeholders_responses = models.StringField(
+        label="External stakeholders selections", 
+        blank=True
     )
-    external_stakeholders = models.LongStringField(
-        label="When considering external stakeholders, who did you think about?",
-        blank=True,  # Allow blank if no options are selected
+    internal_stakeholders_other_text = models.StringField(
+        label="If other internal stakeholder, please explain:",
+        blank=True
     )
-    external_stakeholders_other = models.StringField(
-        label="If other, please explain:",
-        blank=True,
+    external_stakeholders_other_text = models.StringField(
+        label="If other external stakeholder, please explain:",
+        blank=True
     )
-
-    # Add these fields to track individual selections
-    internal_investors = models.BooleanField(initial=False)
-    internal_suppliers = models.BooleanField(initial=False)
-    internal_customers = models.BooleanField(initial=False)
-    internal_regulators = models.BooleanField(initial=False)
-    internal_ngos = models.BooleanField(initial=False)
-    internal_community = models.BooleanField(initial=False)
-    internal_media = models.BooleanField(initial=False)
-    
-    # Add these fields to track individual selections
-    external_employees = models.BooleanField(initial=False)
-    external_executive = models.BooleanField(initial=False)
-    external_board = models.BooleanField(initial=False)
-    external_chairman = models.BooleanField(initial=False)
-    external_ceo = models.BooleanField(initial=False)
     
     age = models.StringField(
         label="What is your age?",
@@ -268,19 +243,47 @@ class Checks(Page):
     form_fields = [
         'stakeholder_attributes',
         'trendline',
-        'internal_stakeholders_other',
-        'external_stakeholders_other',
+        'internal_stakeholders_responses',
+        'external_stakeholders_responses',
+        'internal_stakeholders_other_text',
+        'external_stakeholders_other_text'
     ]
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        # Combine selected checkboxes into a single string for internal stakeholders
-        internal_selected = player.participant.vars.get('internal_stakeholders', [])
-        player.internal_stakeholders = ', '.join(internal_selected)
-
-        # Combine selected checkboxes into a single string for external stakeholders
-        external_selected = player.participant.vars.get('external_stakeholders', [])
-        player.external_stakeholders = ', '.join(external_selected)
+        # Process the internal stakeholders string
+        if player.internal_stakeholders_responses:
+            # Parse the string of T/F values to determine which options were selected
+            options = ["Investors", "Suppliers", "Customers", "Regulators", 
+                      "NGOs", "Community", "Media", "Other"]
+            
+            selected = []
+            for i, char in enumerate(player.internal_stakeholders_responses):
+                if char == 'T' and i < len(options):
+                    selected.append(options[i])
+            
+            # If "Other" was selected, add the text response
+            if "Other" in selected and player.internal_stakeholders_other_text:
+                selected[-1] = f"Other: {player.internal_stakeholders_other_text}"
+            
+            print(f"Internal stakeholders selected: {', '.join(selected)}")
+        
+        # Process the external stakeholders string
+        if player.external_stakeholders_responses:
+            # Parse the string of T/F values to determine which options were selected
+            options = ["Employees", "Executive Management", "Board of Directors", 
+                      "Chairman", "CEO", "Other"]
+            
+            selected = []
+            for i, char in enumerate(player.external_stakeholders_responses):
+                if char == 'T' and i < len(options):
+                    selected.append(options[i])
+            
+            # If "Other" was selected, add the text response
+            if "Other" in selected and player.external_stakeholders_other_text:
+                selected[-1] = f"Other: {player.external_stakeholders_other_text}"
+            
+            print(f"External stakeholders selected: {', '.join(selected)}")
 
 class Demographics(Page):
     form_model = 'player'

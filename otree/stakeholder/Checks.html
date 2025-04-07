@@ -3,9 +3,15 @@
 
 <style>
     /* Remove bullet points from lists */
-    ul {
+    ul, ol {
         list-style-type: none;
-        padding-left: 0; /* Remove default padding */
+        padding-left: 0;
+    }
+    .checkbox-item {
+        margin-bottom: 8px;
+    }
+    .hidden-field {
+        display: none;
     }
 </style>
 
@@ -32,39 +38,151 @@
 </ul>
 {{ formfield_errors 'trendline' }}
 
-<!-- Multiple-choice question 1 -->
+<!-- Internal Stakeholders -->
 <p>
     3. When considering <b>internal stakeholders</b>, who did you think about? (Select all that apply)
 </p>
-<ul>
-    <li><input type="checkbox" name="internal_stakeholders" value="Investors"> Investors</li>
-    <li><input type="checkbox" name="internal_stakeholders" value="Suppliers"> Suppliers</li>
-    <li><input type="checkbox" name="internal_stakeholders" value="Customers"> Customers</li>
-    <li><input type="checkbox" name="internal_stakeholders" value="Regulators"> Regulators</li>
-    <li><input type="checkbox" name="internal_stakeholders" value="NGOs"> NGOs</li>
-    <li><input type="checkbox" name="internal_stakeholders" value="Community"> Community</li>
-    <li><input type="checkbox" name="internal_stakeholders" value="Media"> Media</li>
-    <li>
-        <input type="checkbox" name="internal_stakeholders" value="Other"> Other - please explain:
-        <input type="text" name="internal_stakeholders_other" style="margin-left: 10px;">
+<ol id="internal-stakeholders-list">
+    <li class="checkbox-item"><input type="checkbox" class="internal-checkbox" /> Investors</li>
+    <li class="checkbox-item"><input type="checkbox" class="internal-checkbox" /> Suppliers</li>
+    <li class="checkbox-item"><input type="checkbox" class="internal-checkbox" /> Customers</li>
+    <li class="checkbox-item"><input type="checkbox" class="internal-checkbox" /> Regulators</li>
+    <li class="checkbox-item"><input type="checkbox" class="internal-checkbox" /> NGOs</li>
+    <li class="checkbox-item"><input type="checkbox" class="internal-checkbox" /> Community</li>
+    <li class="checkbox-item"><input type="checkbox" class="internal-checkbox" /> Media</li>
+    <li class="checkbox-item">
+        <input type="checkbox" class="internal-checkbox" id="internal-other-checkbox" /> Other - please explain:
+        <input type="text" id="internal-other-text" name="internal_stakeholders_other_text" 
+               style="margin-left: 10px;" oninput="updateInternalSelections()">
     </li>
-</ul>
+</ol>
 
-<!-- Multiple-choice question 2 -->
+<!-- Hidden field to store internal stakeholders responses -->
+<input type="text" class="hidden-field" id="id_internal_stakeholders_responses" 
+       name="internal_stakeholders_responses" value="" required>
+{{ formfield_errors 'internal_stakeholders_responses' }}
+
+<!-- External Stakeholders -->
 <p>
     4. When considering <b>external stakeholders</b>, who did you think about? (Select all that apply)
 </p>
-<ul>
-    <li><input type="checkbox" name="external_stakeholders" value="Employees"> Employees</li>
-    <li><input type="checkbox" name="external_stakeholders" value="Executive Management"> Executive Management</li>
-    <li><input type="checkbox" name="external_stakeholders" value="Board of Directors"> Board of Directors</li>
-    <li><input type="checkbox" name="external_stakeholders" value="Chairman"> Chairman</li>
-    <li><input type="checkbox" name="external_stakeholders" value="CEO"> CEO</li>
-    <li>
-        <input type="checkbox" name="external_stakeholders" value="Other"> Other - please explain:
-        <input type="text" name="external_stakeholders_other" style="margin-left: 10px;">
+<ol id="external-stakeholders-list">
+    <li class="checkbox-item"><input type="checkbox" class="external-checkbox" /> Employees</li>
+    <li class="checkbox-item"><input type="checkbox" class="external-checkbox" /> Executive Management</li>
+    <li class="checkbox-item"><input type="checkbox" class="external-checkbox" /> Board of Directors</li>
+    <li class="checkbox-item"><input type="checkbox" class="external-checkbox" /> Chairman</li>
+    <li class="checkbox-item"><input type="checkbox" class="external-checkbox" /> CEO</li>
+    <li class="checkbox-item">
+        <input type="checkbox" class="external-checkbox" id="external-other-checkbox" /> Other - please explain:
+        <input type="text" id="external-other-text" name="external_stakeholders_other_text" 
+               style="margin-left: 10px;" oninput="updateExternalSelections()">
     </li>
-</ul>
+</ol>
+
+<!-- Hidden field to store external stakeholders responses -->
+<input type="text" class="hidden-field" id="id_external_stakeholders_responses" 
+       name="external_stakeholders_responses" value="" required>
+{{ formfield_errors 'external_stakeholders_responses' }}
 
 <p>{{ next_button }}</p>
+
+{{ endblock }}
+
+
+{{ block scripts }}
+<script>
+    // Initialize checkbox arrays
+    const internalCheckboxes = document.querySelectorAll('.internal-checkbox');
+    const externalCheckboxes = document.querySelectorAll('.external-checkbox');
+    
+    // Get the hidden fields
+    const internalResponsesField = document.getElementById('id_internal_stakeholders_responses');
+    const externalResponsesField = document.getElementById('id_external_stakeholders_responses');
+    
+    // Get other text input elements
+    const internalOtherCheckbox = document.getElementById('internal-other-checkbox');
+    const internalOtherText = document.getElementById('internal-other-text');
+    const externalOtherCheckbox = document.getElementById('external-other-checkbox');
+    const externalOtherText = document.getElementById('external-other-text');
+    
+    // Initial strings with all falses
+    let internalResponses = 'F'.repeat(internalCheckboxes.length);
+    let externalResponses = 'F'.repeat(externalCheckboxes.length);
+    
+    // Set up event listeners for internal checkboxes
+    internalCheckboxes.forEach((checkbox, index) => {
+        checkbox.addEventListener('change', function() {
+            updateInternalSelections();
+        });
+    });
+    
+    // Set up event listeners for external checkboxes
+    externalCheckboxes.forEach((checkbox, index) => {
+        checkbox.addEventListener('change', function() {
+            updateExternalSelections();
+        });
+    });
+    
+    // Function to update internal selections
+    function updateInternalSelections() {
+        let tempResponses = '';
+        let atLeastOneSelected = false;
+        
+        internalCheckboxes.forEach((checkbox, index) => {
+            if (checkbox.checked) {
+                tempResponses += 'T';
+                atLeastOneSelected = true;
+            } else {
+                tempResponses += 'F';
+            }
+        });
+        
+        // Only update if at least one is selected
+        if (atLeastOneSelected) {
+            internalResponses = tempResponses;
+            internalResponsesField.value = internalResponses;
+        } else {
+            internalResponses = '';
+            internalResponsesField.value = '';
+        }
+        
+        // Ensure the "Other" text field is enabled only when the checkbox is checked
+        internalOtherText.disabled = !internalOtherCheckbox.checked;
+    }
+    
+    // Function to update external selections
+    function updateExternalSelections() {
+        let tempResponses = '';
+        let atLeastOneSelected = false;
+        
+        externalCheckboxes.forEach((checkbox, index) => {
+            if (checkbox.checked) {
+                tempResponses += 'T';
+                atLeastOneSelected = true;
+            } else {
+                tempResponses += 'F';
+            }
+        });
+        
+        // Only update if at least one is selected
+        if (atLeastOneSelected) {
+            externalResponses = tempResponses;
+            externalResponsesField.value = externalResponses;
+        } else {
+            externalResponses = '';
+            externalResponsesField.value = '';
+        }
+        
+        // Ensure the "Other" text field is enabled only when the checkbox is checked
+        externalOtherText.disabled = !externalOtherCheckbox.checked;
+    }
+    
+    // Initialize the text fields (disabled by default)
+    internalOtherText.disabled = true;
+    externalOtherText.disabled = true;
+    
+    // Initialize the form when the page loads
+    updateInternalSelections();
+    updateExternalSelections();
+</script>
 {{ endblock }}
