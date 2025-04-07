@@ -3,12 +3,12 @@ from dotenv import load_dotenv
 load_dotenv('../secrets.env')
 
 SESSION_CONFIGS = [
-    dict(
-        name='mftrust',
-        display_name="A Framed Trust Game with Message Option",
-        app_sequence=['mftrust'],
-        num_demo_participants=2,
-    ),
+    # dict(
+    #     name='mftrust',
+    #     display_name="A Framed Trust Game with Message Option",
+    #     app_sequence=['mftrust'],
+    #     num_demo_participants=2,
+    # ),
     dict(
         name='stakeholder',
         display_name="A Stakeholder Game",

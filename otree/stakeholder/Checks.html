@@ -1,30 +1,70 @@
-{{ block title }}Some Last Questions{{ endblock }}
+{{ block title }}Post-Task Questions{{ endblock }}
 {{ block content }}
-    <p>
-        Thank you for participating! 
-        Before you go, we have a few last questions for you.
-    </p>
 
-    <!-- Manipulation Checks -->
-    <p>Please answer the following questions about the case materials, to the best of your recollections.</p>
+<style>
+    /* Remove bullet points from lists */
+    ul {
+        list-style-type: none;
+        padding-left: 0; /* Remove default padding */
+    }
+</style>
 
-    <p>
-        Which of the following describes the <b>stakeholder relationship attributes</b> toward Acme LLC of the internal and external stakeholders consulted for the stakeholder engagement initiative?
-    </p>
-    <ul>
-        <li><input type="radio" name="stakeholder_attributes" value="The consulted stakeholders had low power, legitimacy, and urgency toward Acme LLC." required> The consulted stakeholders had <b>low power, legitimacy, and urgency</b> toward Acme LLC.</li>
-        <li><input type="radio" name="stakeholder_attributes" value="The consulted stakeholders had high power, legitimacy, and urgency toward Acme LLC."> The consulted stakeholders had <b>high power, legitimacy, and urgency</b> toward Acme LLC.</li>
-    </ul>
-    {{ formfield_errors 'stakeholder_attributes' }}
+<!-- Manipulation Checks -->
+<p>Please answer the following questions to the best of your recollections.</p>
 
-    <p>
-        Which of the following describes the <b>trendline of the stakeholder consensus</b> depicted in Acme LLC’s ESG theme prioritization chart?
-    </p>
-    <ul>
-        <li><input type="radio" name="trendline" value="The trendline was negative, indicating a negative correlation between the internal and stakeholder priorities." required> The trendline was negative, indicating a <b>negative consensus</b> between the internal and external stakeholder priorities.</li>
-        <li><input type="radio" name="trendline" value="The trendline was positive, indicating a positive correlation between the internal and stakeholder priorities."> The trendline was positive, indicating a <b>positive consensus</b> between the internal and external stakeholder priorities.</li>
-    </ul>
-    {{ formfield_errors 'trendline' }}
+<!-- Single-choice question 1 -->
+<p>
+    1. Which of the following describes the <b>relevance of the stakeholders consulted</b> for the ESG prioritization initiative?
+</p>
+<ul>
+    <li><input type="radio" name="stakeholder_attributes" value="Low power, legitimacy, and urgency" required> The consulted stakeholders had <b>low power, legitimacy, and urgency</b> toward Acme.</li>
+    <li><input type="radio" name="stakeholder_attributes" value="High power, legitimacy, and urgency"> The consulted stakeholders had <b>high power, legitimacy, and urgency</b> toward Acme.</li>
+</ul>
+{{ formfield_errors 'stakeholder_attributes' }}
 
-    <p>{{ next_button }}</p>
+<!-- Single-choice question 2 -->
+<p>
+    2. Which of the following describes the <b>trendline of the stakeholder consensus</b> depicted in Acme's ESG theme prioritization chart?
+</p>
+<ul>
+    <li><input type="radio" name="trendline" value="Negative correlation" required> The trendline was negative, indicating a <b>negative consensus</b> between the internal and external stakeholder priorities.</li>
+    <li><input type="radio" name="trendline" value="Positive correlation"> The trendline was positive, indicating a <b>positive consensus</b> between the internal and external stakeholder priorities.</li>
+</ul>
+{{ formfield_errors 'trendline' }}
+
+<!-- Multiple-choice question 1 -->
+<p>
+    3. When considering <b>internal stakeholders</b>, who did you think about? (Select all that apply)
+</p>
+<ul>
+    <li><input type="checkbox" name="internal_stakeholders" value="Investors"> Investors</li>
+    <li><input type="checkbox" name="internal_stakeholders" value="Suppliers"> Suppliers</li>
+    <li><input type="checkbox" name="internal_stakeholders" value="Customers"> Customers</li>
+    <li><input type="checkbox" name="internal_stakeholders" value="Regulators"> Regulators</li>
+    <li><input type="checkbox" name="internal_stakeholders" value="NGOs"> NGOs</li>
+    <li><input type="checkbox" name="internal_stakeholders" value="Community"> Community</li>
+    <li><input type="checkbox" name="internal_stakeholders" value="Media"> Media</li>
+    <li>
+        <input type="checkbox" name="internal_stakeholders" value="Other"> Other - please explain:
+        <input type="text" name="internal_stakeholders_other" style="margin-left: 10px;">
+    </li>
+</ul>
+
+<!-- Multiple-choice question 2 -->
+<p>
+    4. When considering <b>external stakeholders</b>, who did you think about? (Select all that apply)
+</p>
+<ul>
+    <li><input type="checkbox" name="external_stakeholders" value="Employees"> Employees</li>
+    <li><input type="checkbox" name="external_stakeholders" value="Executive Management"> Executive Management</li>
+    <li><input type="checkbox" name="external_stakeholders" value="Board of Directors"> Board of Directors</li>
+    <li><input type="checkbox" name="external_stakeholders" value="Chairman"> Chairman</li>
+    <li><input type="checkbox" name="external_stakeholders" value="CEO"> CEO</li>
+    <li>
+        <input type="checkbox" name="external_stakeholders" value="Other"> Other - please explain:
+        <input type="text" name="external_stakeholders_other" style="margin-left: 10px;">
+    </li>
+</ul>
+
+<p>{{ next_button }}</p>
 {{ endblock }}

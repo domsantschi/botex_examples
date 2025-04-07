@@ -1,10 +1,16 @@
-{{ block title }}Some Last Questions{{ endblock }}
+{{ block title }}A Few Final Questions{{ endblock }}
 {{ block content }}
 
 <style>
     /* Ensure all radio button cells have the same width */
     .radio-cell {
         width: 12.5%; /* Divide evenly for 8 columns */
+        text-align: center;
+    }
+    .radio-label {
+        font-size: 0.9em;
+        margin-top: 5px;
+        display: block;
     }
 </style>
 
@@ -12,11 +18,22 @@
     <p>Are you generally a person who is willing to take risks or do you try to avoid taking risks?</p>
     <table style="margin: 15px 0; width: 100%; text-align: center;">
         <tr>
-            <td style="text-align: left;">Not at all willing to take risks</td>
+            <!-- <td style="text-align: left;">Not at all willing to take risks</td> -->
             {% for i in range(1, 8) %}
-                <td class="radio-cell"><input type="radio" name="risk_attitudes" value="{{ i }}" required></td>
+                <td class="radio-cell">
+                    <input type="radio" name="risk_attitudes" value="{{ i }}" required>
+                    <span class="radio-label">
+                        {% if i == 1 %}Not at all willing to take risks{% endif %}
+                        {% if i == 2 %}Not willing to take risks{% endif %}
+                        {% if i == 3 %}Rather not willing to take risks{% endif %}
+                        {% if i == 4 %}Neutral{% endif %}
+                        {% if i == 5 %}Rather willing to take risks{% endif %}
+                        {% if i == 6 %}Willing to take risks{% endif %}
+                        {% if i == 7 %}Very willing to take risks{% endif %}
+                    </span>
+                </td>
             {% endfor %}
-            <td style="text-align: right;">Very willing to take risks</td>
+            <!-- <td style="text-align: right;">Very willing to take risks</td> -->
         </tr>
     </table>
 </div>
@@ -25,11 +42,22 @@
     <p>Do you believe that Acme LLC should provide additional information about its ESG impacts and stakeholder engagement process?</p>
     <table style="margin: 15px 0; width: 100%; text-align: center;">
         <tr>
-            <td style="text-align: left;">Strongly disagree</td>
+            <!-- <td style="text-align: left;">Strongly disagree</td> -->
             {% for i in range(1, 8) %}
-                <td class="radio-cell"><input type="radio" name="disclosure_transparency" value="{{ i }}" required></td>
+                <td class="radio-cell">
+                    <input type="radio" name="disclosure_transparency" value="{{ i }}" required>
+                    <span class="radio-label">
+                        {% if i == 1 %}Strongly disagree{% endif %}
+                        {% if i == 2 %}Disagree{% endif %}
+                        {% if i == 3 %}Somewhat disagree{% endif %}
+                        {% if i == 4 %}Neutral{% endif %}
+                        {% if i == 5 %}Somewhat agree{% endif %}
+                        {% if i == 6 %}Agree{% endif %}
+                        {% if i == 7 %}Strongly agree{% endif %}
+                    </span>
+                </td>
             {% endfor %}
-            <td style="text-align: right;">Strongly agree</td>
+            <!-- <td style="text-align: right;">Strongly agree</td> -->
         </tr>
     </table>
 </div>
@@ -38,11 +66,22 @@
     <p>How strongly do you personally agree that companies should sacrifice profitability to promote ESG themes?</p>
     <table style="margin: 15px 0; width: 100%; text-align: center;">
         <tr>
-            <td style="text-align: left;">Strongly disagree</td>
+            <!-- <td style="text-align: left;">Strongly disagree</td> -->
             {% for i in range(1, 8) %}
-                <td class="radio-cell"><input type="radio" name="esg_relevance" value="{{ i }}" required></td>
+                <td class="radio-cell">
+                    <input type="radio" name="esg_relevance" value="{{ i }}" required>
+                    <span class="radio-label">
+                        {% if i == 1 %}Strongly disagree{% endif %}
+                        {% if i == 2 %}Disagree{% endif %}
+                        {% if i == 3 %}Somewhat disagree{% endif %}
+                        {% if i == 4 %}Neutral{% endif %}
+                        {% if i == 5 %}Somewhat agree{% endif %}
+                        {% if i == 6 %}Agree{% endif %}
+                        {% if i == 7 %}Strongly agree{% endif %}
+                    </span>
+                </td>
             {% endfor %}
-            <td style="text-align: right;">Strongly agree</td>
+            <!-- <td style="text-align: right;">Strongly agree</td> -->
         </tr>
     </table>
 </div>

@@ -43,7 +43,7 @@ class Player(BasePlayer):
     # Existing fields
     condition = models.StringField(
         label="Condition assigned to the player",
-        choices=["Low Stakeholder Salience", "High Stakeholder Salience"],
+        choices=["Low Stakeholder Relevance", "High Stakeholder Relevance"],
     )
     # Fields to store user inputs
     ebit = models.FloatField(label="EBIT")
@@ -54,14 +54,14 @@ class Player(BasePlayer):
         label="Please provide your written justifications for your assessment."
     )
 
-    # Fields to store second assessment inputs
-    ebit_assessment2 = models.FloatField(label="EBIT (Assessment 2)", initial=0)
-    net_sales_assessment2 = models.FloatField(label="Net Sales (Assessment 2)", initial=0)
-    market_cap_assessment2 = models.FloatField(label="Market Capitalization (Assessment 2)", initial=0)
-    altman_z_assessment2 = models.FloatField(label="Altman Z-Score (Assessment 2)", initial=0)
-    justifications_assessment2 = models.LongStringField(
-        label="Justifications for Assessment 2"
-    )
+    # # Fields to store second assessment inputs
+    # ebit_assessment2 = models.FloatField(label="EBIT (Assessment 2)", initial=0)
+    # net_sales_assessment2 = models.FloatField(label="Net Sales (Assessment 2)", initial=0)
+    # market_cap_assessment2 = models.FloatField(label="Market Capitalization (Assessment 2)", initial=0)
+    # altman_z_assessment2 = models.FloatField(label="Altman Z-Score (Assessment 2)", initial=0)
+    # justifications_assessment2 = models.LongStringField(
+    #     label="Justifications for Assessment 2"
+    # )
 
     # Fields for Controls
     risk_attitudes = models.IntegerField(
@@ -80,23 +80,58 @@ class Player(BasePlayer):
         widget=widgets.RadioSelectHorizontal,
     )
 
-    # Fields for Checks
+    # Single-choice questions
     stakeholder_attributes = models.StringField(
-        label="Which of the following describes the stakeholder relationship attributes toward Acme LLC?",
+        label="Which of the following describes the relevance of the stakeholders consulted for the ESG prioritization initiative?",
         choices=[
-            "The consulted stakeholders had low power, legitimacy, and urgency toward Acme LLC.",
-            "The consulted stakeholders had high power, legitimacy, and urgency toward Acme LLC.",
+            "Low power, legitimacy, and urgency",
+            "High power, legitimacy, and urgency",
         ],
         widget=widgets.RadioSelect,
     )
     trendline = models.StringField(
-        label="Which of the following describes the trendline of the stakeholder consensus depicted in Acme LLC’s ESG theme prioritization chart?",
+        label="Which of the following describes the trendline of the stakeholder consensus depicted in Acme's ESG theme prioritization chart?",
         choices=[
-            "The trendline was negative, indicating a negative correlation between the internal and stakeholder priorities.",
-            "The trendline was positive, indicating a positive correlation between the internal and stakeholder priorities.",
+            "Negative correlation",
+            "Positive correlation",
         ],
         widget=widgets.RadioSelect,
     )
+
+    # Multiple-choice questions
+    internal_stakeholders = models.LongStringField(
+        label="When considering internal stakeholders, who did you think about?",
+        blank=True,  # Allow blank if no options are selected
+    )
+    internal_stakeholders_other = models.StringField(
+        label="If other, please explain:",
+        blank=True,
+    )
+    external_stakeholders = models.LongStringField(
+        label="When considering external stakeholders, who did you think about?",
+        blank=True,  # Allow blank if no options are selected
+    )
+    external_stakeholders_other = models.StringField(
+        label="If other, please explain:",
+        blank=True,
+    )
+
+    # Add these fields to track individual selections
+    internal_investors = models.BooleanField(initial=False)
+    internal_suppliers = models.BooleanField(initial=False)
+    internal_customers = models.BooleanField(initial=False)
+    internal_regulators = models.BooleanField(initial=False)
+    internal_ngos = models.BooleanField(initial=False)
+    internal_community = models.BooleanField(initial=False)
+    internal_media = models.BooleanField(initial=False)
+    
+    # Add these fields to track individual selections
+    external_employees = models.BooleanField(initial=False)
+    external_executive = models.BooleanField(initial=False)
+    external_board = models.BooleanField(initial=False)
+    external_chairman = models.BooleanField(initial=False)
+    external_ceo = models.BooleanField(initial=False)
+    
     age = models.StringField(
         label="What is your age?",
         choices=[
@@ -141,6 +176,12 @@ class Player(BasePlayer):
         widget=widgets.RadioSelectHorizontal,
     )
 
+    # New field to store feedback
+    feedback = models.LongStringField(
+        label="Participant feedback",
+        blank=True,  # Optional field
+    )
+
 # --- Functions ----------------------------------------------------------------
 
 def creating_session(subsession: Subsession):
@@ -149,7 +190,7 @@ def creating_session(subsession: Subsession):
             p.participant.wealth = cu(0)
             p.participant.part_id = create_id()
             # Randomly assign a condition
-            p.condition = random.choice(['Low Stakeholder Salience', 'High Stakeholder Salience'])
+            p.condition = random.choice(['Low Stakeholder Relevance', 'High Stakeholder Relevance'])
             # Randomly assign Stakeholder Consensus (Condition 3 or 4)
             p.stakeholder_consensus = random.choice(['Negative Stakeholder Consensus', 'Positive Stakeholder Consensus'])
 
@@ -227,7 +268,19 @@ class Checks(Page):
     form_fields = [
         'stakeholder_attributes',
         'trendline',
+        'internal_stakeholders_other',
+        'external_stakeholders_other',
     ]
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        # Combine selected checkboxes into a single string for internal stakeholders
+        internal_selected = player.participant.vars.get('internal_stakeholders', [])
+        player.internal_stakeholders = ', '.join(internal_selected)
+
+        # Combine selected checkboxes into a single string for external stakeholders
+        external_selected = player.participant.vars.get('external_stakeholders', [])
+        player.external_stakeholders = ', '.join(external_selected)
 
 class Demographics(Page):
     form_model = 'player'
@@ -241,7 +294,21 @@ class Demographics(Page):
     ]
 
 class Thanks(Page):
-    pass
+    form_model = 'player'
+    form_fields = ['feedback']  # Capture feedback in the database
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            participant_id=player.participant.part_id
+        )
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        # Save feedback to the database
+        feedback = player.feedback
+        if feedback:
+            print(f"Feedback received: {feedback}")
 
 # Update the page sequence
 page_sequence = [

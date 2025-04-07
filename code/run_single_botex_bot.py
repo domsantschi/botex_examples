@@ -8,6 +8,6 @@ load_dotenv('secrets.env')
 
 # The missing config (botex_db, openai_api_key) will be read from the environment
 botex.run_single_bot(
-    url = "http://localhost:8000/InitializeParticipant/0wpbvvt1"
+    url = "http://localhost:8000/InitializeParticipant/z03cionj"
 )
 

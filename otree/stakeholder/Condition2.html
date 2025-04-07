@@ -1,13 +1,13 @@
-{{ block title }}Stakeholder Consensus{{ endblock }}
+{{ block title }}Stakeholder Engagement Initiative{{ endblock }}
 {{ block content }}
     <p>
-        In addition to the information about the stakeholder salience, you noted <b> the following ESG theme prioritization chart</b> in Acme LLC’s recent disclosures about their stakeholder engagement initiative.
+        In addition to the information about the engaged stakeholder's relevance, you noted <b> the following ESG theme prioritization chart</b>.
     </p>
     
 
     {% if stakeholder_consensus == 'Negative Stakeholder Consensus' %}
     <p>
-        The <b>negative trendline</b> indicates a <b>negative consensus</b> between the internal and stakeholder priorities. 
+        The <b>negative trendline</b> indicates a <b>negative consensus</b> between the internal and external stakeholder priorities. 
         In other words, internal stakeholders deem ESG themes as relevant that are not deemed as relevant by external stakeholders and vice versa.
     </p>
     <img src="/static/images/Negative.png" alt="Figure1" style="max-width:100%; height:auto;">
@@ -18,7 +18,7 @@
 
     {% elif stakeholder_consensus == 'Positive Stakeholder Consensus' %}
     <p>
-        The <b>positive trendline</b> indicates a <b>positive consensus</b> between the internal and stakeholder priorities. 
+        The <b>positive trendline</b> indicates a <b>positive consensus</b> between the internal and external stakeholder priorities. 
         In other words, <b>internal stakeholders deem ESG themes as relevant that are also deemed as relevant by external stakeholders and vice versa</b>.
     </p>
     <img src="/static/images/Positive.png" alt="Figure1" style="max-width:100%; height:auto;">
