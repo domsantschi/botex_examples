@@ -1,0 +1,41 @@
+{{ block title }}Provide Your Service{{ endblock }}
+{{ block content }}
+    <p>
+        The grief-stricken person has decided to pay <strong>{{ payment_amount }}</strong> points for your services.
+    </p>
+    
+    {{ if response_message }}
+        <div style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; background-color: #f0f8ff;">
+            <h4>Message from the grief-stricken person:</h4>
+            <p><em>{{ response_message }}</em></p>
+        </div>
+    {{ endif }}
+    
+    <p>
+        Now you need to decide:
+        <ul>
+            <li><strong>Effort Level (0-10)</strong>: How much effort will you put into helping? 
+                Higher effort costs you 5 points per level but may lead to better outcomes.</li>
+            <li><strong>Service Quality (0-10)</strong>: What quality of service will you provide? 
+                This represents the actual value you deliver to the person seeking help.</li>
+        </ul>
+    </p>
+    
+    <p>
+        Remember: Your payoff will be the payment you receive minus the cost of your effort (effort level × 5).
+        The person seeking help will benefit from the combined effect of your effort and service quality,
+        multiplied by {{ C.EFFORT_MULTIPLIER }}.
+    </p>
+    
+    <p>
+        You can also send a final message to the person you're helping, perhaps explaining your approach
+        or offering additional support.
+    </p>
+    
+    <p>
+        {{ formfields }}
+    </p>
+    
+    {{ next_button }}
+
+{{ endblock }}

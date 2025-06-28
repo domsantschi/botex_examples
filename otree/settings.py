@@ -3,12 +3,18 @@ from dotenv import load_dotenv
 load_dotenv('../secrets.env')
 
 SESSION_CONFIGS = [
-    # dict(
-    #     name='mftrust',
-    #     display_name="A Framed Trust Game with Message Option",
-    #     app_sequence=['mftrust'],
-    #     num_demo_participants=2,
-    # ),
+    dict(
+        name='mftrust',
+        display_name="A Framed Trust Game with Message Option",
+        app_sequence=['mftrust'],
+        num_demo_participants=2,
+    ),
+    dict(
+        name='grief_support',
+        display_name="Grief Support Interaction Game",
+        app_sequence=['grief_support'],
+        num_demo_participants=2,
+    ),
     dict(
         name='stakeholder',
         display_name="A Stakeholder Game",
@@ -26,7 +32,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
 
-PARTICIPANT_FIELDS = ['wealth', 'part_id']
+PARTICIPANT_FIELDS = ['wealth', 'part_id', 'well_being']
 SESSION_FIELDS = []
 
 # ISO-639 code

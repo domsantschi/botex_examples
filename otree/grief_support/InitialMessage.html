@@ -1,0 +1,26 @@
+{{ block title }}Your Introduction{{ endblock }}
+{{ block content }}
+    <p>
+        You have been assigned the role of the <strong>service provider</strong>.
+        {{ if C.NUM_ROUNDS > 1 }}
+            This will be your role for the entire experiment. 
+        {{ endif }}
+        You will be interacting with someone who recently lost a beloved one and may need support services.
+    </p>
+    <p>
+        You can introduce yourself and your services to the person seeking support.
+        This is your opportunity to explain what kind of help you can offer and build trust.
+        You can share information about your approach, experience, or anything else you think might be helpful.
+        If you prefer not to send an introduction message, you can leave the field blank.
+    </p>
+    <p>
+        Remember: Your goal is to provide meaningful support while building a sustainable practice.
+        The person you're helping will decide how much they're willing to pay based on your introduction.
+    </p>
+    <p>
+    {{ formfields }}
+    <p>
+    {{ next_button }}
+    </p>
+
+{{ endblock }}

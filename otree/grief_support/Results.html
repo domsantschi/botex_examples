@@ -1,0 +1,71 @@
+{{ block title }}Results of This Round{{ endblock }}
+{{ block content }}
+
+<h3>Interaction Summary</h3>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Aspect</th>
+        <th>Value</th>
+    </tr>
+    <tr>
+        <td>Payment made by grief-stricken person</td>
+        <td>{{ group.payment_amount }}</td>
+    </tr>
+    <tr>
+        <td>Effort level provided by service provider</td>
+        <td>{{ group.effort_level }}/10</td>
+    </tr>
+    <tr>
+        <td>Service quality provided</td>
+        <td>{{ group.service_quality }}/10</td>
+    </tr>
+    <tr>
+        <td>Total support received</td>
+        <td>{{ support_received }} points</td>
+    </tr>
+    <tr>
+        <td>Cost of effort to service provider</td>
+        <td>{{ effort_cost }} points</td>
+    </tr>
+</table>
+
+{{ if final_message }}
+    <div style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; background-color: #f0f8ff;">
+        <h4>Final message from service provider:</h4>
+        <p><em>{{ final_message }}</em></p>
+    </div>
+{{ endif }}
+
+<h3>Your Payoffs This Round</h3>
+
+{{ if player.id_in_group == 1 }}
+    <p>
+        As the <strong>grief-stricken person</strong>:
+        <br>Starting budget: {{ C.INITIAL_BUDGET }}
+        <br>Payment made: -{{ group.payment_amount }}
+        <br>Support received: +{{ support_received }}
+        <br><strong>Your payoff this round: {{ player.payoff }}</strong>
+    </p>
+{{ else }}
+    <p>
+        As the <strong>service provider</strong>:
+        <br>Payment received: +{{ group.payment_amount }}
+        <br>Cost of effort: -{{ effort_cost }}
+        <br><strong>Your payoff this round: {{ player.payoff }}</strong>
+    </p>
+{{ endif }}
+
+<h3>Total Well-being Accumulated</h3>
+<p>
+    Grief-stricken person's total well-being: {{ p1_well_being }} points<br>
+    Service provider's total earnings: {{ p2_well_being }} points
+</p>
+
+{{ if player.round_number < C.NUM_ROUNDS }}
+    <p><strong>You will now proceed to the next round with new circumstances.</strong></p>
+{{ endif }}
+
+{{ next_button }}
+
+{{ endblock }}

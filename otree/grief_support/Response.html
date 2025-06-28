@@ -1,0 +1,38 @@
+{{ block title }}Your Response{{ endblock }}
+{{ block content }}
+    <p>
+        You have been assigned the role of the <strong>grief-stricken person</strong>.
+        {{ if C.NUM_ROUNDS > 1 }}
+            This will be your role for the entire experiment. 
+        {{ endif }}
+        You are someone who recently lost a beloved one and may benefit from professional support services.
+    </p>
+    
+    {{ if message_exists }}
+        <div style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; background-color: #f9f9f9;">
+            <h4>Message from Service Provider:</h4>
+            <p><em>{{ initial_message }}</em></p>
+        </div>
+    {{ else }}
+        <p>The service provider chose not to send an introduction message.</p>
+    {{ endif }}
+    
+    <p>
+        You have a budget of {{ C.INITIAL_BUDGET }} points. You can decide how much of this budget 
+        you're willing to spend on support services. Consider the service provider's introduction 
+        when making your decision.
+    </p>
+    
+    <p>
+        You can also respond to the service provider's message or share information about 
+        what kind of support you're looking for. This communication can help them provide 
+        better service tailored to your needs.
+    </p>
+    
+    <p>
+        {{ formfields }}
+    </p>
+    
+    {{ next_button }}
+
+{{ endblock }}

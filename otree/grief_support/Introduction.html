@@ -1,0 +1,54 @@
+{{ block title }}Instructions{{ endblock }}
+{{ block content }}
+
+<p>
+    This is an experiment on interaction between people seeking support and service providers.
+    You have been randomly and anonymously paired with another participant.
+    The roles are randomly assigned: one person will be someone who recently lost a beloved one 
+    (grief-stricken person), and the other will be a service provider who helps people in grief.
+    You will learn your role prior to making any decisions.
+</p>
+<p>
+    During the experiment, you and the other participant can earn points based on your interactions.
+    The amount of points that you earned will determine your final payment or the likelihood that 
+    you will win a prize that will be raffled out among participants in this experiment.
+</p>
+<p>
+    The interaction proceeds as follows:
+    <ol>
+        <li>The service provider can send an initial message to introduce their services</li>
+        <li>The grief-stricken person can respond and decide how much they are willing to pay for support</li>
+        <li>The service provider then decides how much effort to put in and what quality of service to provide</li>
+        <li>Both participants can exchange additional messages throughout the process</li>
+    </ol>
+</p>
+<p>
+    {{ if C.NUM_ROUNDS > 1 }}
+        This experiment lasts {{ C.NUM_ROUNDS }} rounds.
+    {{ endif }}
+    {{ if C.NUM_ROUNDS > 1 }} 
+        Each round, the grief-stricken person
+    {{ else }} 
+        The grief-stricken person
+    {{ endif }}
+    starts with a budget of {{ C.INITIAL_BUDGET }} points.
+    They can choose to pay some or all of this budget for support services.
+    The service provider starts with 0 points but can earn money by providing services,
+    though providing high-quality service requires effort which has a cost.
+</p>
+<p>
+    The effectiveness of the support is multiplied by {{ C.EFFORT_MULTIPLIER }} when provided professionally.
+    However, the service provider incurs costs based on the effort they put in.
+</p>
+<p>
+    <b>Example</b>:
+    Suppose the grief-stricken person pays 60 points for services. 
+    If the service provider provides effort level 5 and service quality 7,
+    the total support received is (5 + 7) × {{ C.EFFORT_MULTIPLIER }} = 24 points.
+    The grief-stricken person's final well-being is {{ C.INITIAL_BUDGET }} - 60 + 24 = 64 points.
+    The service provider's payoff is 60 - (5 × 5) = 35 points (since each effort point costs 5).
+</p>
+
+{{ next_button }}
+
+{{ endblock }}
