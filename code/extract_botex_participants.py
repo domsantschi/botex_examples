@@ -2,7 +2,8 @@ import botex
 from tabulate import tabulate
 
 # Adjust this to where you stored the botex data 
-BOTEX_DB = 'data/external/botex_single_exp.sqlite3'
+# BOTEX_DB = 'data/external/botex_single_exp.sqlite3'
+BOTEX_DB = 'botex.sqlite3'
 part = botex.read_participants_from_botex_db(
   botex_db = BOTEX_DB
 )

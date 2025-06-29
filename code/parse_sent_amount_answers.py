@@ -2,7 +2,8 @@ import botex
 from scipy import stats
 from tabulate import tabulate
 
-BOTEX_DB = 'data/external/botex_session_exp.sqlite3'
+# BOTEX_DB = 'data/external/botex_session_exp.sqlite3'
+BOTEX_DB = 'botex.sqlite3'
 responses = botex.read_responses_from_botex_db(
   botex_db = BOTEX_DB
 )
